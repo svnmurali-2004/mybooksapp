@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-const Register = () => {
+const Register = (setShowlogindetails) => {
+    const navigate=useNavigate()
     const [loginDetails, setLoginDetails] = useState({
         name: "",
         gender: "male",
@@ -39,7 +40,9 @@ const Register = () => {
             if (response.data.acknowledged) {
                 sessionStorage.setItem('loginDetails', JSON.stringify(response.data.loginDetails));
                 sessionStorage.setItem('islogin', JSON.stringify(true));
+                setShowlogindetails(prev=>!prev)
                 alert("Account created successfully!");
+                navigate("/books")
             } else {
                 alert(response.data.des);
             }

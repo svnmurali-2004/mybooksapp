@@ -52,4 +52,13 @@ app.post("/api/signup",async(req,res)=>{
     }
 })
 
+app.get('/api/getbooks',async(req,res)=>{
+    try{
+        const book=cluster.db("mybookstore").collection("books")
+        const books=await book.find({}).toArray()
+        res.send({acknowledged:true,books:books})
+    }catch(err){
+        console.log(err)
+    }
+})
 app.listen(3001,()=>{console.log("app running at port 3001")})

@@ -2,8 +2,7 @@ import React,{useState} from 'react'
 import "./Login.css";
 import axios from "axios"
 import { Link, useNavigate } from 'react-router-dom';
-const Login = () => {
-
+const Login = ({setShowsignout}) => {
     const [loginDetails,setLoginDetails]=useState({email:"",password:""})
     const {email,password}=loginDetails
     const navigate=useNavigate()
@@ -19,7 +18,8 @@ const Login = () => {
             alert ('login success')
             sessionStorage.setItem('loginDetails',JSON.stringify(loginDetails))
             sessionStorage.setItem('islogin',JSON.stringify(true))
-            navigate("/book")
+            setShowsignout(prev=>!prev)
+            navigate("/books")
         }else if (respo1.data.acknowledged===false){
             alert(respo1.data.des)
             
