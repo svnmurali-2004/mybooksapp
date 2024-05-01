@@ -1,0 +1,78 @@
+.container {
+  width: 100%; /* Set width to 100% of viewport width */
+  height: 100%; /* Set height to 100% of viewport height */
+  margin: 0; /* Remove default margins */
+  padding: 40px;
+  background-image: url("/src/assets/background.jpg");
+  background-size: cover;
+  background-position: cover;
+  background-repeat: no-repeat;
+  border-radius: 1px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding-top: 200px;
+  text-align: center;
+}
+
+
+.container {
+    max-width: 800px;
+    height: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f8f9fa; /* Light gray background color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-top: 200px;
+    /* padding-bottom: 100px; */
+    text-align: center; /* Center align the content */
+  }
+  
+  h1 {
+    color: #343a40; /* Dark gray text color */
+  }
+  
+  .search-container {
+    margin-bottom: 20px;
+  }
+  
+  .search-box {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ced4da; /* Border color */
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .search-btn {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue button color */
+    color: #fff; /* White button text color */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .search-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .auth-buttons {
+    text-align: center;
+  }
+  
+  .auth-buttons button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .auth-buttons button:hover {
+    background-color: #0056b3;
+  }
+  
