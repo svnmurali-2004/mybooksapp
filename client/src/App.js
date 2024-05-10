@@ -9,27 +9,32 @@ import Navbar from './components/Navbar';
 import AboutUs from './components/AboutUs.jsx';
 import { useState } from 'react';
 
+import Loader from './components/Loader.jsx';
+import { LoaderProvider } from './context/Context.js';
+import BookUpload from './components/BookUpload.js';
 
 function App() {
   const [showsignout,setShowsignout]=useState(false)
 
   return (
-    <div className="App">
-      
-      <Router>
-      <Navbar setShowsignout={setShowsignout} showsignout={showsignout}/>
-        <Routes>
-          <Route path="/" element={<Home showsignout={showsignout}/>} />
-          <Route path="/login" element={<Login setShowsignout={setShowsignout}/>} />
-          <Route path="/register" element={<Register setShowsignout={setShowsignout}/>} />
-          <Route path="/books" element={<Books setShowsignout={setShowsignout} />} />
-          <Route path="/card" element={<Card />} />
-          <Route path='/aboutus' element={<AboutUs/>}/>
-          
-        </Routes>
-      </Router>
-      
-    </div>
+    <LoaderProvider>
+    <Router><div className="App">
+      <Loader/>
+    <Navbar setShowsignout={setShowsignout} showsignout={showsignout}/>
+      <Routes>
+        <Route path="/" element={<Home showsignout={showsignout}/>} />
+        <Route path="/login" element={<Login setShowsignout={setShowsignout}/>} />
+        <Route path="/register" element={<Register setShowsignout={setShowsignout}/>} />
+        <Route path="/books" element={<Books setShowsignout={setShowsignout} />} />
+        <Route path="/card" element={<Card />} />
+        <Route path='/aboutus' element={<AboutUs/>}/>
+        <Route path='/bookupload' element={<BookUpload/>} />
+      </Routes>
+    
+    
+  </div></Router>
+  </LoaderProvider>
+    
   );
 }
 

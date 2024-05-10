@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {NavLink}  from 'react-router-dom';
-
+import { useLoader } from '../context/Context.js'; 
 const  Navbar=({showsignout,setShowsignout})=>{
-  
+  const {loginDetails,loginDetailsDispatcher} =useLoader()
+  useEffect(()=>{console.log(loginDetails)},[])
   return (
     <nav className="bg-gray-800 p-4">
       <ul className="flex justify-end space-x-4">
@@ -12,9 +13,9 @@ const  Navbar=({showsignout,setShowsignout})=>{
         <li>
           <NavLink className="text-white hover:text-gray-300" to="/aboutus">About</NavLink>
         </li>
-        {!showsignout&&
+        {loginDetails.email&&
         <li>
-        <NavLink className="text-white hover:text-gray-300" to="/" onClick={()=>{sessionStorage.removeItem('islogin');setShowsignout(prev=>!prev)}}>SignOut</NavLink>
+        <NavLink className="text-white hover:text-gray-300" to="/" onClick={()=>{sessionStorage.removeItem('islogin');loginDetailsDispatcher({type:"RESET_LOGINDETAILS",payload:{}})}}>SignOut</NavLink>
       </li>}
         
        
