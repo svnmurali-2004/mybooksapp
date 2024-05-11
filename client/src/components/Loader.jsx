@@ -16,7 +16,7 @@ const Loader = () => {
     )}
     
     
-            {!loader.loader &&<p>not loading</p>}
+            
             {!loader.loader && loader.error&&(
         <div>
             {console.log(loader.error)}

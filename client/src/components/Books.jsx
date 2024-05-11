@@ -56,7 +56,7 @@ const Books = ({setShowsignout}) => {
     <>
       <div className="bookstore">
         <h1>BOOK STORE</h1>
-        <input type='text' value={searchData} onChange={searchHandler} />
+        <input type='text' className='border-2 border-green-200' placeholder='search here' value={searchData} onChange={searchHandler} />
       </div>
       <div className="booklist">
         {filteredData.map((book,index) => (

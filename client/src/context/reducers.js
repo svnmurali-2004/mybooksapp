@@ -23,6 +23,7 @@ export const dispatchLoginDetails1=(state,action)=>{
     switch (action.type) {
         case "SET_LOGINDETAILS":
             console.log("details updated")
+            console.log(action.payload)
             return {...state,...action.payload}
         case "RESET_LOGINDETAILS":
             sessionStorage.removeItem('loginDetails')

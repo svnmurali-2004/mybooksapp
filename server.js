@@ -41,7 +41,7 @@ app.post("/api/signin",async(req,res)=>{
         
         const temp=await comparePasswords(data.password,respo1.password)
     if (temp){
-        
+        console.log(respo1)
         res.send({acknowledged:true,des:"authentication success",loginDetails:respo1,xtoken:tokengenerator({_id:data.email})})
 
     }else{

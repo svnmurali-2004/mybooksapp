@@ -44,11 +44,17 @@ const Register = ({setShowlogindetails}) => {
             loaderDispatcher({type:"FETCH_INIT",payload:"fetch started successfully"})
             const response = await axios.post("http://localhost:3001/api/signup", loginDetails1);
             if (response.data.acknowledged) {
-                sessionStorage.setItem('loginDetails', JSON.stringify(response.data.loginDetails));
-                sessionStorage.setItem('islogin', JSON.stringify(true));
-                // setShowlogindetails(prev=>!prev)
-                loginDetailsDispatcher({type:"SET_LOGINDETAILS",payload:{...response.data.loginDetails}})
+                
                 alert("Account created successfully!");
+                setLoginDetails1({
+                    name: "",
+                    gender: "male",
+                    interests: "",
+                    email: "",
+                    phone: "",
+                    password: ""
+                })
+                alert("plz login to proceed")
                 
             } else {
                 console.log(response.data.des);

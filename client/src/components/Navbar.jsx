@@ -13,11 +13,15 @@ const  Navbar=({showsignout,setShowsignout})=>{
         <li>
           <NavLink className="text-white hover:text-gray-300" to="/aboutus">About</NavLink>
         </li>
+        {
+          loginDetails.isAdmin&&
+          <li>
+          <NavLink className="text-white hover:text-gray-300 active:text-red-400" to={"/bookupload"} >Bookupload</NavLink>
+          </li>
+        }
         {loginDetails.email&&<>
-
-        <li>
-        <NavLink className="text-white hover:text-gray-300 active:text-red-400" to={"/bookupload"} >Bookupload</NavLink>
-        </li>
+          
+       
           <li>
         <NavLink className="text-white hover:text-gray-300" to="/" onClick={()=>{sessionStorage.removeItem('islogin');loginDetailsDispatcher({type:"RESET_LOGINDETAILS",payload:{}})}}>SignOut</NavLink>
       </li>

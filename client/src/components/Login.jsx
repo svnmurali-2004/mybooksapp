@@ -31,10 +31,10 @@ const Login = ({setShowsignout}) => {
         const respo1=await axios.post("http://localhost:3001/api/signin",loginDetails1)
         if (respo1.data.acknowledged){
             
-            sessionStorage.setItem('loginDetails',JSON.stringify({...loginDetails1,xtoken:respo1.data.xtoken}))
+            sessionStorage.setItem('loginDetails',JSON.stringify({...loginDetails1,xtoken:respo1.data.xtoken,isAdmin:respo1.data.loginDetails.isAdmin}))
             sessionStorage.setItem('islogin',JSON.stringify(true))
             setShowsignout(prev=>!prev)
-            loginDetailsDispatcher({type:"SET_LOGINDETAILS",payload:{...loginDetails1,xtoken:respo1.data.xtoken}})
+            loginDetailsDispatcher({type:"SET_LOGINDETAILS",payload:{...loginDetails1,xtoken:respo1.data.xtoken,isAdmin:respo1.data.loginDetails.isAdmin}})
             setLoginDetails1((prev)=>({...prev,xtoken:respo1.data.xtoken}))
             console.log(respo1.data.xtoken)
            
