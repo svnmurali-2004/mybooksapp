@@ -67,9 +67,8 @@ const Books = ({setShowsignout}) => {
               <p className="book-author"><strong>Author:</strong> {book.author}</p>
               <p className="book-description">{book.description}</p>
               <button className='p-1 rounded-md bg-blue-400 active:bg-blue-600' onClick={()=>{
-                console.log(book.download_link)
-                navigate(book.download_link)
-              }}>Download</button>
+                window.open(book.download_link,"_blank")
+              }}>View Book</button>
             </div>
           </div>
         ))}

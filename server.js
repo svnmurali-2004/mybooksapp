@@ -7,6 +7,7 @@ const cluster=new MongoClient(uri)
 const jsonwebtoken=require("jsonwebtoken")
 const authmiddleware  = require("./authmiddleware")
 const bookSchema=require("./dbschemas/bookSchema")
+const bcrypt=require('bcrypt')
 require("dotenv").config()
 console.log(process.env.secretkey)
 cluster.connect().then(console.log("connected to mongodb")).catch(err=>console.log(err))
@@ -19,14 +20,28 @@ const tokengenerator=(data)=>{
         , process.env.secretkey,{expiresIn:"10h"});
     return xtoken
 }
+
+function comparePasswords(inputPassword, hashedPassword) {
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(inputPassword, hashedPassword, function (err, result) {
+            if (err) {
+                reject(false);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
 app.post("/api/signin",async(req,res)=>{
     try{
     const data =req.body
     const accounts=cluster.db("mybookstore").collection("accounts")
     const respo1= await accounts.findOne({_id:data.email})
-    console.log(respo1)
     if(respo1!=null){
-    if (data.password===respo1.password){
+        
+        const temp=await comparePasswords(data.password,respo1.password)
+    if (temp){
+        
         res.send({acknowledged:true,des:"authentication success",loginDetails:respo1,xtoken:tokengenerator({_id:data.email})})
 
     }else{
@@ -43,13 +58,27 @@ app.post("/api/signin",async(req,res)=>{
 
 })
 
+function hashPassword(password) {
+    return new Promise((resolve, reject) => {
+        bcrypt.hash(password, 10, function(err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+
 app.post("/api/signup",async(req,res)=>{
     const data=req.body
     try{
         const accounts=cluster.db("mybookstore").collection("accounts")
         const respo1=await accounts.findOne({_id:data.email})
         if (respo1==null){
-            const respo2=await accounts.insertOne({_id:data.email,...data})
+            
+            const password=await hashPassword(data.password)
+            const respo2=await accounts.insertOne({_id:data.email,...data,password:password})
             const respo3=await accounts.findOne({_id:data.email})
             res.send({acknowledged:true,des:"account created",loginDetails:{...respo3,xtoken:tokengenerator({_id:data.email})}})
         }else{
@@ -123,4 +152,5 @@ app.post("/api/bookupload",authmiddleware,async(req,res)=>{
     }
 
 })
+
 app.listen(3001,()=>{console.log("app running at port 3001")})
