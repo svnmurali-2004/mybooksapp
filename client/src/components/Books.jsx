@@ -59,6 +59,7 @@ const Books = ({setShowsignout}) => {
       setMainData([])
     }
   }
+  
   return (
     <>
       <div className="bookstore">
@@ -77,7 +78,10 @@ const Books = ({setShowsignout}) => {
               <button className='p-1 rounded-md bg-blue-400 active:bg-blue-600' onClick={()=>{
                 window.open(book.download_link,"_blank")
               }}>View Book</button>
-              
+              {book.download&&
+              <button className='p-1 rounded-md bg-blue-400 active:bg-blue-600' onClick={()=>{
+                window.open(book.download,"_blank")
+              }}>Download</button>}
               {loginDetails.isAdmin &&<>
               <button className='p-1 rounded-md bg-blue-400 active:bg-blue-600' onClick={()=>{
                 deleteHandler(book._id)
