@@ -43,7 +43,7 @@ const Books = ({setShowsignout}) => {
     }
     console.log("useeffect executed")
   
-  },[])
+  },[mainData])
 
   const searchHandler=(e)=>{
     const {value}=e.target
@@ -51,7 +51,14 @@ const Books = ({setShowsignout}) => {
     const fdata=mainData.filter((item)=>(item.name).toLowerCase().includes(value.toLowerCase()))
     setFilteredData(fdata);
   }
-
+  const deleteHandler=async(_id)=>{
+    loaderDispatcher({type:"FETCH_INIT",payload:'fetching started'})
+    const respo=await axios.post("http://localhost:3001/api/deletebook",{_id:_id},{headers:{'Content-Type': 'application/json',xtoken:loginDetails.xtoken}})
+    loaderDispatcher({type:"FETCH_SUCCESS",payload:"fetched successfully"})
+    if (respo.data.acknowledged){
+      setMainData([])
+    }
+  }
   return (
     <>
       <div className="bookstore">
@@ -66,9 +73,17 @@ const Books = ({setShowsignout}) => {
               <h2 className="book-title">{book.name}</h2>
               <p className="book-author"><strong>Author:</strong> {book.author}</p>
               <p className="book-description">{book.description}</p>
+              <div className='flex  justify-between '>
               <button className='p-1 rounded-md bg-blue-400 active:bg-blue-600' onClick={()=>{
                 window.open(book.download_link,"_blank")
               }}>View Book</button>
+              
+              {loginDetails.isAdmin &&<>
+              <button className='p-1 rounded-md bg-blue-400 active:bg-blue-600' onClick={()=>{
+                deleteHandler(book._id)
+              }}>delete book</button></>}
+              </div>
+              
             </div>
           </div>
         ))}

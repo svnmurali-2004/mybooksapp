@@ -153,4 +153,22 @@ app.post("/api/bookupload",authmiddleware,async(req,res)=>{
 
 })
 
+app.post("/api/deletebook",authmiddleware,async(req,res)=>{
+    try{
+        console.log("delete book called")
+    const data=req.body
+    const books=await cluster.db("mybookstore").collection("books")
+    const respo1=await books.findOne({_id:new ObjectId(data._id)})
+    console.log(data)
+    console.log(respo1)
+    if (respo1!=null){
+        const respo2=await books.deleteOne({_id:new ObjectId(data._id)})
+        console.log(respo2)
+        res.status(200).send({acknowledged:true,msg:"book deleted successfully"})
+    }}
+    catch(err){
+        res.status(500).send({acknowledged:false,msg:"system error"})
+        console.log(err)
+    }
+})
 app.listen(3001,()=>{console.log("app running at port 3001")})
